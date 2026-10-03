@@ -14,7 +14,7 @@ a { color:inherit; }
 .group { font-size:18px; color:#ffffff; margin:0 0 12px 2px; }
 .page-title { font-size:52px; font-weight:200; margin:0 0 10px; }
 .page-sub { font-size:17px; opacity:.85; max-width:640px; }
-.tiles { display:grid; grid-template-columns:repeat(6,168px); grid-auto-rows:168px; gap:8px; }
+.tiles { display:grid; grid-template-columns:repeat(6,168px); grid-auto-rows:168px; gap:4px; }
 .tile { border:0; padding:0; cursor:pointer; position:relative; display:block; text-align:left; color:#ffffff; text-decoration:none; }
 .tile.wide { grid-column:span 2; }
 .t-chats { background:#2d89ef; } .t-feed { background:#1b6fd0; } .t-comm { background:#3fa0ff; }
