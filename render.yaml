@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: mayak-web
+    env: static
+    buildCommand: echo "static"
+    staticPublishPath: ./web
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

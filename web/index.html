@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mayak — Главная</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="importmap">
+    { "imports": { "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2" } }
+  </script>
+</head>
+<body>
+  <div id="bg"></div>
+  <header class="topbar">
+    <div class="brand">◉ Mayak</div>
+    <div id="greeting" class="greeting">Здравствуйте, гость</div>
+    <div class="top-actions">
+      <button id="btn-auth-open" class="btn small">Войти</button>
+      <button id="btn-logout" class="btn small hidden">Выйти</button>
+    </div>
+  </header>
+
+  <main class="start">
+    <section id="auth-panel" class="panel hidden">
+      <h2>Вход / Регистрация</h2>
+      <p class="muted">Только почта и пароль. Любая почта. Никаких имён и телефонов.</p>
+      <input id="email" type="email" placeholder="почта" autocomplete="email" />
+      <input id="password" type="password" placeholder="пароль (мин. 8 символов)" autocomplete="current-password" />
+      <div class="row">
+        <button id="btn-login" class="btn">Войти</button>
+        <button id="btn-signup" class="btn primary">Создать аккаунт</button>
+      </div>
+      <div id="auth-msg" class="msg"></div>
+    </section>
+
+    <section id="dash">
+      <div class="tiles">
+        <button class="tile wide blue" data-go="chats">💬<span>Чаты</span><em>скоро</em></button>
+        <button class="tile green" data-go="feed">📰<span>Лента</span><em>скоро</em></button>
+        <button class="tile orange" data-go="communities">👥<span>Сообщества</span><em>скоро</em></button>
+        <button class="tile wide violet" data-go="account">👤<span>Аккаунт</span><em>nick • bio</em></button>
+        <button class="tile teal" data-go="settings">⚙️<span>Настройки</span><em>скоро</em></button>
+        <button class="tile red" data-go="safety">🛡️<span>Безопасность</span><em>анонимность</em></button>
+      </div>
+
+      <section id="account-panel" class="panel hidden">
+        <h2>Аккаунт</h2>
+        <label>Ник (3-20: a-z 0-9 _)</label>
+        <input id="nick" maxlength="20" placeholder="nick" />
+        <label>О себе (до 160)</label>
+        <input id="bio" maxlength="160" placeholder="..." />
+        <div class="row">
+          <button id="btn-save" class="btn primary">Сохранить</button>
+        </div>
+        <div id="acc-msg" class="msg"></div>
+      </section>
+
+      <div id="stub" class="panel hidden"></div>
+    </section>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
