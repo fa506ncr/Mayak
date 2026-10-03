@@ -3,100 +3,73 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mayak — Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Mayak — Start</title>
   <link rel="stylesheet" href="./styles.css" />
   <script type="importmap">
     { "imports": { "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2" } }
   </script>
 </head>
 <body>
-  <div id="bg" aria-hidden="true"></div>
-
-  <header class="header">
-    <div class="header-inner">
-      <div class="logo"><span class="logo-dot"></span>Mayak</div>
-      <div class="userbox">
-        <span id="avatar" class="avatar is-guest" title="гость">
-          <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="#2a3444"/><circle cx="18" cy="14" r="6" fill="#8b95a7"/><path d="M6 30c1.5-6 6-9 12-9s10.5 3 12 9" fill="#8b95a7"/></svg>
-          <b id="avatar-letter">?</b>
-        </span>
-        <span id="greeting" class="greeting">Здравствуйте, гость</span>
-        <button id="btn-auth-open" class="btn-login">Войти</button>
-        <button id="btn-logout" class="btn-ghost hidden">Выйти</button>
-      </div>
+  <header class="top">
+    <div class="title">Mayak</div>
+    <div class="user">
+      <span id="greeting">Здравствуйте, гость</span>
+      <button id="btn-auth-open" class="login">Войти</button>
+      <button id="btn-logout" class="login hidden">Выйти</button>
     </div>
   </header>
 
   <main class="wrap">
-    <section id="auth-modal" class="modal hidden">
-      <div class="modal-card">
-        <div class="modal-title">Вход / Регистрация</div>
-        <div class="modal-sub">Только почта и пароль. Любая почта, без имён.</div>
-        <input id="email" type="email" placeholder="почта" autocomplete="email" />
-        <input id="password" type="password" placeholder="пароль (мин. 8)" autocomplete="current-password" />
-        <div class="modal-row">
-          <button id="btn-login" class="btn-primary">Войти</button>
-          <button id="btn-signup" class="btn-ghost">Создать аккаунт</button>
-        </div>
-        <div id="auth-msg" class="msg"></div>
-        <button id="btn-auth-close" class="modal-x" aria-label="закрыть">✕</button>
+    <section id="auth-panel" class="auth hidden">
+      <div class="auth-title">Вход / Регистрация</div>
+      <div class="auth-sub">Только почта и пароль. Любая почта.</div>
+      <input id="email" type="email" placeholder="почта" autocomplete="email" />
+      <input id="password" type="password" placeholder="пароль" autocomplete="current-password" />
+      <div class="auth-row">
+        <button id="btn-login" class="login">Войти</button>
+        <button id="btn-signup" class="login">Создать аккаунт</button>
       </div>
+      <div id="auth-msg" class="msg"></div>
     </section>
 
-    <div class="bento">
-      <button class="card xl" data-go="chats">
-        <span class="card-top"><span class="card-ico">✉</span><span class="badge">3</span></span>
-        <span class="card-title">Чаты</span>
-        <span class="chat-list">
-          <span class="chat"><i style="background:#5b8cff">A</i><span><b>anon_fox</b><s>видел маяк сегодня?</s></span><em>2м</em></span>
-          <span class="chat"><i style="background:#22b07d">K</i><span><b>user_91ab</b><s>скинул трек в ленту</s></span><em>14м</em></span>
-        </span>
+    <div class="group">Главная</div>
+    <div class="tiles">
+      <button class="tile t-chats" data-go="chats">
+        <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 4h16v11H9l-5 4V4z" fill="none" stroke="#ffffff" stroke-width="1.8"/><circle cx="9" cy="9.5" r="1" fill="#ffffff"/><circle cx="12.5" cy="9.5" r="1" fill="#ffffff"/><circle cx="16" cy="9.5" r="1" fill="#ffffff"/></svg></span>
+        <span class="label">Чаты</span>
       </button>
-
-      <button class="card wide" data-go="feed">
-        <span class="card-top"><span class="card-ico">◈</span><span class="pill">тренд</span></span>
-        <span class="card-title">Лента</span>
-        <span id="feed-preview" class="feed-preview">Ночной город шумит, а маяк молчит. Анонимный пост #128: «тишина — тоже сигнал» · ♥ 214</span>
+      <button class="tile t-feed" data-go="feed">
+        <span class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" fill="none" stroke="#ffffff" stroke-width="1.8"/><line x1="8" y1="8" x2="16" y2="8" stroke="#ffffff" stroke-width="1.6"/><line x1="8" y1="11" x2="16" y2="11" stroke="#ffffff" stroke-width="1.6"/><line x1="8" y1="14" x2="13" y2="14" stroke="#ffffff" stroke-width="1.6"/></svg></span>
+        <span class="label">Лента</span>
       </button>
-
-      <button class="card tall" data-go="account">
-        <span class="card-top"><span class="card-ico">●</span></span>
-        <span class="card-title">Аккаунт</span>
-        <span id="account-preview" class="account-preview">Войди, чтобы взять уникальный ник.</span>
+      <button class="tile t-comm" data-go="communities">
+        <span class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3" fill="none" stroke="#ffffff" stroke-width="1.8"/><circle cx="16.5" cy="9.5" r="2.4" fill="none" stroke="#ffffff" stroke-width="1.6"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5" fill="none" stroke="#ffffff" stroke-width="1.8"/></svg></span>
+        <span class="label">Сообщества</span>
       </button>
-
-      <button class="card" data-go="communities">
-        <span class="card-top"><span class="card-ico">◎</span></span>
-        <span class="card-title">Сообщества</span>
-        <span class="avatars"><i style="background:#7c5cff">M</i><i style="background:#0ea5a0">N</i><i style="background:#f26d3d">W</i><em>+12</em></span>
+      <button class="tile wide t-acc" data-go="account">
+        <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2" fill="none" stroke="#ffffff" stroke-width="1.8"/><path d="M5.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6" fill="none" stroke="#ffffff" stroke-width="1.8"/></svg></span>
+        <span class="label">Аккаунт</span>
       </button>
-
-      <button class="card" data-go="settings">
-        <span class="card-top"><span class="card-ico">⚙</span></span>
-        <span class="card-title">Настройки</span>
-        <span class="card-sub">тема · приватность</span>
+      <button class="tile t-set" data-go="settings">
+        <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="#ffffff" stroke-width="1.8"/><path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1" stroke="#ffffff" stroke-width="1.8"/></svg></span>
+        <span class="label">Настройки</span>
       </button>
-
-      <button class="card" data-go="safety">
-        <span class="card-top"><span class="card-ico">⬢</span></span>
-        <span class="card-title">Безопасность</span>
-        <span class="card-sub">анонимность по умолчанию</span>
+      <button class="tile t-sec" data-go="safety">
+        <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.2 8-7 10-3.8-2-7-5-7-10V6l7-3z" fill="none" stroke="#ffffff" stroke-width="1.8"/></svg></span>
+        <span class="label">Безопасность</span>
       </button>
     </div>
 
-    <section id="account-panel" class="sheet hidden">
-      <div class="sheet-title">Аккаунт</div>
-      <div class="sheet-sub">Ник уникален — занятый взять нельзя.</div>
+    <section id="account-panel" class="auth hidden">
+      <div class="auth-title">Аккаунт</div>
+      <div class="auth-sub">Ник уникален — занятый взять нельзя.</div>
       <input id="nick" maxlength="20" placeholder="nick" />
       <div id="nick-status" class="msg"></div>
       <input id="bio" maxlength="160" placeholder="о себе" />
-      <div class="sheet-row"><button id="btn-save" class="btn-primary">Сохранить</button></div>
+      <div class="auth-row"><button id="btn-save" class="login">Сохранить</button></div>
       <div id="acc-msg" class="msg"></div>
     </section>
-    <div id="stub" class="sheet hidden"></div>
+    <div id="stub" class="auth hidden"></div>
   </main>
   <script type="module" src="./app.js"></script>
 </body>
