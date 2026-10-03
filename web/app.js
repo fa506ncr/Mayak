@@ -15,23 +15,27 @@ $("btn-signup").onclick = async () => {
   const email = $("email").value.trim(), password = $("password").value;
   $("auth-msg").textContent = "";
   const { error } = await sb.auth.signUp({ email, password });
-  $("auth-msg").textContent = error ? "Ошибка: " + error.message : "Аккаунт создан. Если вход не произошёл — нажми Войти.";
+  if (error) { $("auth-msg").textContent = "Ошибка: " + error.message; return; }
+  $("auth-msg").textContent = "Аккаунт создан.";
+  authPanel.classList.add("hidden");
   await refresh();
 };
 $("btn-login").onclick = async () => {
   const email = $("email").value.trim(), password = $("password").value;
   const { error } = await sb.auth.signInWithPassword({ email, password });
-  $("auth-msg").textContent = error ? "Ошибка: " + error.message : "Вход выполнен.";
+  if (error) { $("auth-msg").textContent = "Ошибка: " + error.message; return; }
+  $("auth-msg").textContent = "";
+  authPanel.classList.add("hidden");
   await refresh();
 };
 
-$("btn-save").onclick = async () => {
+  $("btn-save").onclick = async () => {
   const { data: { user } } = await sb.auth.getUser();
   if (!user) return;
   const nick = $("nick").value.trim(), bio = $("bio").value.trim();
   const { error } = await sb.from("profiles").update({ nick, bio }).eq("id", user.id);
   $("acc-msg").textContent = error ? "Ошибка: " + error.message : "Сохранено.";
-  await refresh(false);
+  await refresh();
 };
 
 document.querySelectorAll(".tile").forEach(t => {
@@ -48,13 +52,12 @@ document.querySelectorAll(".tile").forEach(t => {
   };
 });
 
-async function refresh(resetInputs = true) {
+async function refresh() {
   const { data: { user } } = await sb.auth.getUser();
   $("btn-logout").classList.toggle("hidden", !user);
   $("btn-auth-open").classList.toggle("hidden", !!user);
   if (!user) {
     greeting.textContent = "Здравствуйте, гость";
-    if (resetInputs) { authPanel.classList.remove("hidden"); }
     return;
   }
   const { data } = await sb.from("profiles").select("nick,bio").eq("id", user.id).single();
