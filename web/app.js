@@ -29,12 +29,32 @@ $("btn-login").onclick = async () => {
   await refresh();
 };
 
+const AV_COLORS = ["#2475d6","#0a8f3c","#d14e22","#4b34b8","#03928c","#a91b42"];
+function setAvatar(nick) {
+  const av = $("avatar"), letter = $("avatar-letter");
+  if (!nick) {
+    av.classList.remove("is-user"); av.classList.add("is-guest");
+    av.style.background = "#cfd8dc"; av.title = "гость"; letter.textContent = "?";
+    return;
+  }
+  const ch = (nick[0] || "?").toUpperCase();
+  let h = 0; for (const c of nick) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  av.classList.remove("is-guest"); av.classList.add("is-user");
+  av.style.background = AV_COLORS[h % AV_COLORS.length];
+  av.title = nick; letter.textContent = ch;
+}
+
   $("btn-save").onclick = async () => {
   const { data: { user } } = await sb.auth.getUser();
   if (!user) return;
   const nick = $("nick").value.trim(), bio = $("bio").value.trim();
+  $("acc-msg").textContent = ""; $("nick-status").textContent = "";
+  if (!/^[A-Za-z0-9_]{3,20}$/.test(nick)) { $("nick-status").textContent = "Ник 3-20: a-z 0-9 _"; return; }
+  const { data: taken } = await sb.from("profiles").select("id").ilike("nick", nick).neq("id", user.id).limit(1);
+  if (taken && taken.length) { $("nick-status").textContent = "Ник уже занят — другой взять не сможет, выбери другой."; return; }
   const { error } = await sb.from("profiles").update({ nick, bio }).eq("id", user.id);
-  $("acc-msg").textContent = error ? "Ошибка: " + error.message : "Сохранено.";
+  if (error) { $("acc-msg").textContent = /duplicate|unique|23505/i.test(error.message) ? "Ник уже занят." : "Ошибка: " + error.message; return; }
+  $("acc-msg").textContent = "Сохранено.";
   await refresh();
 };
 
@@ -58,13 +78,16 @@ async function refresh() {
   $("btn-auth-open").classList.toggle("hidden", !!user);
   if (!user) {
     greeting.textContent = "Здравствуйте, гость";
+    setAvatar(null);
     return;
   }
   const { data } = await sb.from("profiles").select("nick,bio").eq("id", user.id).single();
   const nick = data?.nick ?? "user";
   greeting.textContent = `Здравствуйте, ${nick}`;
+  setAvatar(nick);
   $("nick").value = data?.nick ?? "";
   $("bio").value = data?.bio ?? "";
   authPanel.classList.add("hidden");
 }
+setAvatar(null);
 refresh();

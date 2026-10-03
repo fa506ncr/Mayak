@@ -4,6 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mayak — Start</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
   <script type="importmap">
     { "imports": { "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2" } }
@@ -15,7 +18,10 @@
     <div class="metro-title">Mayak</div>
     <div class="metro-user">
       <span id="greeting">Здравствуйте, гость</span>
-      <span class="userpic"></span>
+      <span id="avatar" class="avatar is-guest" title="гость">
+        <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="#cfd8dc"/><circle cx="18" cy="14" r="6" fill="#fff"/><path d="M6 30c1.5-6 6-9 12-9s10.5 3 12 9" fill="#fff"/></svg>
+        <b id="avatar-letter">?</b>
+      </span>
       <button id="btn-auth-open" class="mbtn">Войти</button>
       <button id="btn-logout" class="mbtn hidden">Выйти</button>
     </div>
@@ -65,7 +71,9 @@
 
       <section id="account-panel" class="metro-auth hidden">
         <div class="auth-title">Аккаунт</div>
+        <div class="auth-sub">Ник уникален — занятый взять нельзя.</div>
         <input id="nick" maxlength="20" placeholder="nick" />
+        <div id="nick-status" class="msg"></div>
         <input id="bio" maxlength="160" placeholder="о себе" />
         <div class="auth-row"><button id="btn-save" class="mbtn solid">Сохранить</button></div>
         <div id="acc-msg" class="msg"></div>
